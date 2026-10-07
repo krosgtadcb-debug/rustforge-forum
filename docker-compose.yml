@@ -1,0 +1,29 @@
+services:
+  app:
+    image: php:8.2-apache
+    ports:
+      - "8080:80"
+    volumes:
+      - ./:/var/www/html
+    working_dir: /var/www/html
+    environment:
+      DB_HOST: db
+      DB_NAME: rustforge
+      DB_USER: rustforge
+      DB_PASS: rustforge
+    depends_on:
+      - db
+  db:
+    image: mysql:8.0
+    environment:
+      MYSQL_DATABASE: rustforge
+      MYSQL_USER: rustforge
+      MYSQL_PASSWORD: rustforge
+      MYSQL_ROOT_PASSWORD: root
+    ports:
+      - "3307:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./db/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+volumes:
+  mysql_data:

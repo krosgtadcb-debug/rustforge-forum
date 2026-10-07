@@ -1,0 +1,5 @@
+.env
+.DS_Store
+public/uploads/*
+!public/uploads/.gitkeep
+vendor/
